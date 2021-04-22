@@ -14,10 +14,12 @@ export const connectionManager = (): Middleware<{}, AppState> => {
     dispatch(connected())
   }
 
-  const onClose = (dispatch: Dispatch) => () => {
+  const onClose = (dispatch: Dispatch) => (msg: CloseEvent) => {
     // reconnect if we've lost our connection
-    dispatch(disconnected())
-    dispatch(connect())
+    console.log('msg', msg)
+
+    // dispatch(disconnected())
+    // dispatch(connect())
   }
 
   const onMessage = (dispatch: Dispatch) => (msg: MessageEvent) => {
@@ -39,8 +41,6 @@ export const connectionManager = (): Middleware<{}, AppState> => {
 
       case 'DISCONNECTED':
         if (ws) { ws.close() }
-
-        dispatch(connect())
     }
 
     if (action.message) {

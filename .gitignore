@@ -31,4 +31,4 @@ node_modules/
 dist/
 
 # Vim swap
-[._]*.s[a-v][a-z]
+*.swp
