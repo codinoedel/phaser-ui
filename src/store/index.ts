@@ -1,17 +1,20 @@
 import { applyMiddleware, createStore } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { rootReducer } from './rootReducer'
+import { connectionManager } from './connection/middleware'
+import { testServer } from './testServer'
 
 export const configureStore = () => {
-//  const middlewares = []
-//  const middlewareEnhancer = applyMiddleware(...middlewares)
+  const middlewares = [ connectionManager(), testServer ]
+  const middlewareEnhancer = applyMiddleware(...middlewares)
 
-//  const enhancers = [middlewareEnhancer]
-  const composedEnhancers = composeWithDevTools(/* ...enhancers */)
+  const enhancers = [middlewareEnhancer]
+  const composedEnhancers = composeWithDevTools(...enhancers)
 
   const store = createStore(rootReducer, composedEnhancers)
 
   return store
 }
 
-export type PayloadAction<T> = { type: string; payload: T }
+export type AppState = ReturnType<typeof rootReducer>
+export type AppDispatch = ReturnType<typeof configureStore>
