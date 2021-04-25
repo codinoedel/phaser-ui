@@ -1,12 +1,19 @@
+import classnames from 'classnames'
 import { useAppSelector } from '../hooks'
-import { getOtherPlayers } from '../store/players/selectors'
+import { getPlayers } from '../store/players/selectors'
 import { Player } from '../Player'
 
-export const Players = () => {
-  const players = useAppSelector(getOtherPlayers)
+import './players.scss'
+
+interface Props {
+  className: string
+}
+
+export const Players = ({ className }: Props) => {
+  const players = useAppSelector(getPlayers)
 
   return (
-    <div>
+    <div class={classnames('players', className)}>
       { players.map((player) => (
         <Player name={player.name} />
       ))}

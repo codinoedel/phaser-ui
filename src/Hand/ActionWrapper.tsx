@@ -3,8 +3,8 @@ import { ComponentChildren } from 'preact'
 import { useDispatch } from 'react-redux'
 
 import { useAppSelector } from '../hooks'
-import { discard, addToPhase } from '../store/game/actions'
-import { getIsUserDiscarding, getIsUserMakingPhase } from '../store/game/selectors'
+import { discard, addToPlay } from '../store/game/actions'
+import { getIsUserDiscarding, getIsUserPlaying } from '../store/game/selectors'
 import type { Color, Value } from '../store/game/types'
 
 interface Props {
@@ -15,7 +15,7 @@ interface Props {
 
 export const ActionWrapper = ({ children, color, value }: Props) => {
   const isUserDiscarding = useAppSelector(getIsUserDiscarding)
-  const isUserMakingPhase = useAppSelector(getIsUserMakingPhase)
+  const isUserPlaying = useAppSelector(getIsUserPlaying)
 
   const dispatch = useDispatch()
 
@@ -26,9 +26,9 @@ export const ActionWrapper = ({ children, color, value }: Props) => {
           this one
         </button>
       }
-      { isUserMakingPhase &&
-        <button onClick={() => dispatch(addToPhase(color, value))}>
-          add
+      { isUserPlaying &&
+        <button onClick={() => dispatch(addToPlay(color, value))}>
+          play
         </button>
       }
       { children }

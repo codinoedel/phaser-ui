@@ -20,8 +20,12 @@
   "homepage": "https://github.com/codinoedel/phaser-ui#readme",
   "devDependencies": {
     "@types/react-redux": "^7.1.16",
+    "css-loader": "^5.2.4",
     "html-webpack-plugin": "^5.3.1",
     "redux-devtools-extension": "^2.13.9",
+    "sass": "^1.32.11",
+    "sass-loader": "^11.0.1",
+    "style-loader": "^2.0.0",
     "ts-loader": "^8.1.0",
     "typescript": "^4.2.4",
     "webpack": "^5.33.2",

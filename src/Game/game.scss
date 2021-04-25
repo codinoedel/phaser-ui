@@ -1,0 +1,33 @@
+.game {
+  height: 100%;
+  display: grid;
+  grid-template-areas:
+    "turn players"
+    "stages players"
+    "deck players"
+    "hand players";
+  grid-template-columns: 1fr min(50%, 18rem);
+  grid-template-rows: auto auto 1fr auto;
+
+  .game-turn {
+    grid-area: turn;
+    justify-self: center;
+  }
+
+  .game-stages {
+    grid-area: stages;
+    justify-self: center;
+  }
+
+  .game-deck {
+    grid-area: deck;
+  }
+
+  .game-players {
+    grid-area: players;
+  }
+
+  .game-hand {
+    grid-area: hand;
+  }
+}

@@ -5,6 +5,8 @@ import { useAppSelector } from '../hooks'
 import { initializeGame } from '../store/game/actions'
 import { getIsGameInitialized } from '../store/game/selectors'
 
+import './initializer.scss'
+
 export const Initializer = () => {
   const isGameInitialized = useAppSelector(getIsGameInitialized)
   const dispatch = useDispatch()
@@ -24,10 +26,12 @@ export const Initializer = () => {
   }
 
   return (
-    <form onSubmit={onSubmit}>
-      <div>What is your name?</div>
-      <input type='text' value={name} onInput={onInput} />
-      <button type='submit'>That's me!</button>
-    </form>
+    <div class='initializer'>
+      <form onSubmit={onSubmit}>
+        <label htmlFor='name'>What is your name?</label>
+        <input type='text' value={name} onInput={onInput} name='name' />
+        <button type='submit'>That's me!</button>
+      </form>
+    </div>
   )
 }

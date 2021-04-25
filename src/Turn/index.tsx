@@ -1,27 +1,16 @@
 import { useAppSelector } from '../hooks'
-import { Actions } from '../Actions'
 import { getCurrentTurn, getIsUserTurn } from '../store/game/selectors'
 
-interface TurnLabelProps {
-  isUserTurn: boolean
+interface Props {
+  className: string
 }
 
-const TurnLabel = ({ isUserTurn }: TurnLabelProps) => {
+export const Turn = ({ className }: Props) => {
+  const isUserTurn = useAppSelector(getIsUserTurn)
   const currentTurn = useAppSelector(getCurrentTurn)
   const turnText = isUserTurn ? 'your' : `${currentTurn}'s`
 
   return (
-    <div>It's { turnText } turn</div>
-  )
-}
-
-export const Turn = () => {
-  const isUserTurn = useAppSelector(getIsUserTurn)
-
-  return (
-    <div>
-      <TurnLabel isUserTurn={isUserTurn} />
-      { isUserTurn && <Actions /> }
-    </div>
+    <div class={className}>It's { turnText } turn</div>
   )
 }

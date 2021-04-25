@@ -1,0 +1,56 @@
+.card {
+  --card-width: 2.5rem;
+  --card-height: 3.5rem;
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  font-family: 'Orelega One', serif;
+  justify-content: center;
+
+  &.small {
+    border: solid 1px black;
+    border-radius: 2px;
+    font-size: 16px;
+    height: calc(var(--card-height)* 0.5);
+    width: calc(var(--card-width) * 0.5);
+  }
+
+  &.large {
+    border: solid 2px black;
+    border-radius: 3px;
+    font-size: 42px;
+    height: calc(var(--card-height)* 1.5);
+    width: calc(var(--card-width)* 1.5);
+  }
+
+  &.red {
+    border-color: crimson;
+    color: crimson;
+  }
+
+  &.green {
+    border-color: green;
+    color: green;
+  }
+
+  &.blue {
+    border-color: darkslateblue;
+    color: darkslateblue;
+  }
+
+  &.yellow {
+    border-color: goldenrod;
+    color: goldenrod;
+  }
+
+  &.back {
+    background: repeating-linear-gradient(
+      -45deg,
+      darkorchid,
+      darkorchid 10px,
+      orchid 10px,
+      orchid 20px
+    );
+    border: solid 6px black;
+  }
+}

@@ -15,11 +15,8 @@ export const connectionManager = (): Middleware<{}, AppState> => {
   }
 
   const onClose = (dispatch: Dispatch) => (msg: CloseEvent) => {
-    // reconnect if we've lost our connection
+    // TODO: reconnect if we've lost our connection
     console.log('msg', msg)
-
-    // dispatch(disconnected())
-    // dispatch(connect())
   }
 
   const onMessage = (dispatch: Dispatch) => (msg: MessageEvent) => {
@@ -31,16 +28,20 @@ export const connectionManager = (): Middleware<{}, AppState> => {
   return ({ dispatch }) => next => action => {
     switch(action.type) {
       case 'CONNECT':
-        if (ws) { ws.close() }
-
         ws = new WebSocket(url)
+
+        dispatch(connected())
 
         ws.onopen = onOpen(dispatch)
         ws.onmessage = onMessage(dispatch)
         ws.onclose = onClose(dispatch)
 
+        break
+
       case 'DISCONNECTED':
         if (ws) { ws.close() }
+
+        break
     }
 
     if (action.message) {

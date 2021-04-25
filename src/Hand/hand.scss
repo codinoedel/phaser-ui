@@ -1,0 +1,9 @@
+.hand {
+  display: flex;
+  justify-content: center;
+  padding: 1rem 1rem 2rem 1rem;
+
+  & > * {
+    margin-right: 0.5rem;
+  }
+}

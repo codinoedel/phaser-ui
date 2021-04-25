@@ -1,0 +1,23 @@
+.initializer {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--light-grey);
+
+  form {
+    align-items: stretch;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+
+    label {
+      text-align: center;
+    }
+
+    & > * {
+      margin-bottom: 0.25rem;
+    }
+  }
+}

@@ -1,8 +1,8 @@
 import { useAppDispatch } from '../../hooks'
 import type { Card, Color, Value } from './types'
 
-export const addToPhase = (color: Color, value: Value) => ({
-  type: 'ADD_TO_PHASE',
+export const addToPlay = (color: Color, value: Value) => ({
+  type: 'ADD_TO_PLAY',
   color,
   value,
 })
@@ -14,22 +14,36 @@ export const discard = (color: Color, value: Value) => ({
   value,
 })
 
+export const drawFromDeck = () => ({
+  type: 'DRAW_CARD',
+  message: 'DrawCard',
+  drawLocation: 'deck',
+})
+
+export const drawFromDiscard = () => ({
+  type: 'DRAW_CARD',
+  message: 'DrawCard',
+  drawLocation: 'discard',
+})
+
+export const skipPlay = () => ({
+  type: 'SKIP_PLAY',
+})
+
 export const submitPhase = (cards: Card[]) => ({
   type: 'SUBMIT_PHASE',
   message: 'SubmitPhase',
-  cards
+  cards,
+})
+
+export const playOnPhase = (cards: Card[]) => ({
+  type: 'PLAY_ON_PHASE',
+  message: 'PlayOnPhase',
+  cards,
 })
 
 export const initializeGame = (name: string) => ({
   type: 'INITIALIZE_GAME',
   message: 'InitializeGame',
   name,
-})
-
-export const toggleDiscardMode = () => ({
-  type: 'TOGGLE_DISCARD_MODE'
-})
-
-export const togglePhaseMode = () => ({
-  type: 'TOGGLE_PHASE_MODE'
 })

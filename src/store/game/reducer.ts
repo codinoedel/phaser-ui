@@ -1,17 +1,23 @@
 import update from 'immutability-helper'
 import { Action as ReduxAction } from 'redux'
-import type { Card, Color, Hand, Value } from './types'
+import type { Card, Color, DrawLocation, Hand, TurnStage, Value } from './types'
 
-interface AddToPhase extends ReduxAction<'ADD_TO_PHASE'> {
+interface AddToPlay extends ReduxAction<'ADD_TO_PLAY'> {
   color: Color
   value: Value
 }
 
 interface DiscardResponse extends ReduxAction<'DISCARD_RESPONSE'> {
-  action: {
-    color: Color
-    value: Value
+  request: {
+    action: {
+      color: Color
+      value: Value
+    }
   }
+}
+
+interface DrawCardResponse extends ReduxAction<'DRAW_CARD_RESPONSE'> {
+  response: Card
 }
 
 interface InitializeGameResponse extends ReduxAction<'INITIALIZE_GAME_RESPONSE'> {
@@ -23,42 +29,44 @@ interface InitializeGameResponse extends ReduxAction<'INITIALIZE_GAME_RESPONSE'>
   }
 }
 
-interface ToggleDiscardMode extends ReduxAction<'TOGGLE_DISCARD_MODE'> {}
-interface TogglePhaseMode extends ReduxAction<'TOGGLE_PHASE_MODE'> {}
+interface MakePlayResponse extends ReduxAction<'MAKE_PLAY_RESPONSE'> {}
+
+interface SkipPlay extends ReduxAction<'SKIP_PLAY'> {}
 
 type Action =
-  | AddToPhase
+  | AddToPlay
   | DiscardResponse
+  | DrawCardResponse
   | InitializeGameResponse
-  | ToggleDiscardMode
-  | TogglePhaseMode
+  | MakePlayResponse
+  | SkipPlay
 
 export type Game = {
   currentTurn?: string
   hand: Hand
-  isUserDiscarding: boolean
-  isUserMakingPhase: boolean
-  phase: Card[]
-  topCard?: Card
+  stage: TurnStage
+  play: Card[]
+  topCard: Card | null
   userPlayer: string
 }
 
 const initialState: Game = {
   hand: [],
-  isUserDiscarding: false,
-  isUserMakingPhase: false,
-  phase: [],
+  stage: 'draw',
+  play: [],
+  topCard: null,
   userPlayer: '',
 }
 
 export const gameReducer = (state=initialState, a: Action): Game => {
   switch (a.type) {
-    case 'ADD_TO_PHASE':
+    case 'ADD_TO_PLAY':
       return update(state, { $merge: {
-        phase: update(state.phase, { $push: [
+        play: update(state.play, { $push: [
           { color: a.color, value: a.value },
         ]})
       }})
+
     case 'INITIALIZE_GAME_RESPONSE':
       return update(state, { $merge: {
         userPlayer: a.response.userPlayer,
@@ -67,25 +75,28 @@ export const gameReducer = (state=initialState, a: Action): Game => {
         currentTurn: a.response.currentTurn,
       }})
 
-    case 'TOGGLE_DISCARD_MODE':
+    case 'DRAW_CARD_RESPONSE':
       return update(state, { $merge: {
-        isUserDiscarding: !state.isUserDiscarding
+        hand: update(state.hand, { $push: [ a.response ] }),
+        stage: 'play',
       }})
 
-    case 'TOGGLE_PHASE_MODE':
+    case 'SKIP_PLAY':
+    case 'MAKE_PLAY_RESPONSE':
       return update(state, { $merge: {
-        isUserMakingPhase: !state.isUserMakingPhase
-      }})
+        stage: 'discard'
+    }})
 
     case 'DISCARD_RESPONSE':
-      const index = state.hand.findIndex((c) => c.color === a.action.color && c.value === a.action.value)
+      const index = state.hand.findIndex((c) => c.color === a.request.action.color && c.value === a.request.action.value)
 
       if (index === -1) { return state }
 
       return update(state, { $merge: {
-        isUserDiscarding: false,
+        stage: 'draw',
         hand: update(state.hand, { $splice: [[index, 1]] })
       }})
+
     default:
       return state
   }

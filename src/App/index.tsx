@@ -1,8 +1,10 @@
 import { useDispatch } from 'react-redux'
 
-import { Initializer }  from './Initializer'
-import { Game } from './Game'
-import { connect } from './store/connection/actions'
+import { Initializer }  from '../Initializer'
+import { Game } from '../Game'
+import { connect } from '../store/connection/actions'
+
+import './app.scss'
 
 export const App = () => {
   const dispatch = useDispatch()
@@ -10,7 +12,7 @@ export const App = () => {
   dispatch(connect())
 
   return (
-    <div>
+    <div class='app'>
       <Initializer />
       <Game />
     </div>

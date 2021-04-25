@@ -1,0 +1,32 @@
+.stages {
+  display: flex;
+  padding: 0.5rem;
+
+  & > :not(:last-child) {
+    margin-right: 1rem;
+  }
+  .stage {
+    align-items: center;
+    border: solid 2px darkgrey;
+    border-radius: 3px;
+    color: darkgrey;
+    display: flex;
+    font-weight: 900;
+    height: 1.5rem;
+    justify-content: space-between;
+    padding: 0.5rem;
+    position: relative;
+    text-align: center;
+    width: 8rem;
+
+    &.active {
+      color: orchid;
+      border-color: orchid;
+
+      &.user-turn {
+        color: darkorchid;
+        border-color: darkorchid;
+      }
+    }
+  }
+}

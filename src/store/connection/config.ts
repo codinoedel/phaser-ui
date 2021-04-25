@@ -6,7 +6,7 @@ type EnvironmentConfigs = Record<string, Config>
 
 export const config: EnvironmentConfigs = {
   DEFAULT: {
-    url: 'wss://localhost:8000',
+    url: 'wss://localhost:9133',
   },
 
   SAM: {
